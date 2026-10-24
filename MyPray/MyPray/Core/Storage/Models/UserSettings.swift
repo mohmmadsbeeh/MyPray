@@ -198,7 +198,7 @@ public final class UserSettings {
         self.dhuhrVoiceRaw = dhuhrVoice.rawValue
         self.asrVoiceRaw = asrVoice.rawValue
         self.maghribVoiceRaw = maghribVoice.rawValue
-        self.ishaVoiceRaw = ishaVoiceRaw.rawValue
+        self.ishaVoiceRaw = ishaVoice.rawValue
         self.isPeriodModeActive = isPeriodModeActive
         self.periodModeStartedAt = periodModeStartedAt
         self.isScreenTimeBlockerEnabled = isScreenTimeBlockerEnabled
