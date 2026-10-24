@@ -1,0 +1,17 @@
+# Xcode
+.DS_Store
+*/.DS_Store
+build/
+DerivedData/
+*.xcworkspace
+xcuserdata/
+*.xcuserdatad
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# User-specific
+*.mode1v3
+*.mode2v3
+*.perspectivev3
