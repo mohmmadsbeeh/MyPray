@@ -253,8 +253,10 @@ public final class NotificationScheduler: NSObject, UNUserNotificationCenterDele
                 )
             }
         case NotificationConstants.actionSnooze10:
-            let snoozeMinutes = SwiftDataStore.shared.fetchSettings().snoozeIntervalMinutes
-            scheduleSnoozeAlert(for: prayer, delayMinutes: snoozeMinutes > 0 ? snoozeMinutes : 10)
+            Task { @MainActor in
+                let snoozeMinutes = SwiftDataStore.shared.fetchSettings().snoozeIntervalMinutes
+                self.scheduleSnoozeAlert(for: prayer, delayMinutes: snoozeMinutes > 0 ? snoozeMinutes : 10)
+            }
         default:
             break
         }

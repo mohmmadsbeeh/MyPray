@@ -55,6 +55,17 @@ public struct Surah: Identifiable, Codable, Hashable, Sendable {
             self.translatedName = (try? container.decode(String.self, forKey: .translatedName)) ?? ""
         }
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(nameSimple, forKey: .nameSimple)
+        try container.encode(nameArabic, forKey: .nameArabic)
+        try container.encode(versesCount, forKey: .versesCount)
+        try container.encode(revelationPlace, forKey: .revelationPlace)
+        try container.encode(revelationOrder, forKey: .revelationOrder)
+        try container.encode(translatedName, forKey: .translatedName)
+    }
 }
 
 private struct DynamicCodingKeys: CodingKey {
@@ -130,6 +141,19 @@ public struct Verse: Identifiable, Codable, Hashable, Sendable {
             self.audioUrl = nil
         }
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(verseNumber, forKey: .verseNumber)
+        try container.encode(verseKey, forKey: .verseKey)
+        try container.encode(textUthmani, forKey: .textUthmani)
+        try container.encode(words, forKey: .words)
+        try container.encode([RawTranslation(id: nil, text: translationText)], forKey: .translations)
+        if let audioUrl = audioUrl {
+            try container.encode(RawVerseAudio(url: audioUrl), forKey: .audio)
+        }
+    }
 }
 
 public struct RawTranslation: Codable, Hashable, Sendable {
@@ -200,6 +224,23 @@ public struct QuranWord: Identifiable, Codable, Hashable, Sendable {
             self.transliteration = try? translitContainer.decode(String.self, forKey: DynamicCodingKeys(stringValue: "text")!)
         } else {
             self.transliteration = nil
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(position, forKey: .position)
+        try container.encodeIfPresent(audioUrl, forKey: .audioUrl)
+        try container.encode(charTypeName, forKey: .charTypeName)
+        try container.encode(textUthmani, forKey: .textUthmani)
+        if let translation = translation {
+            var transContainer = container.nestedContainer(keyedBy: DynamicCodingKeys.self, forKey: .translation)
+            try transContainer.encode(translation, forKey: DynamicCodingKeys(stringValue: "text")!)
+        }
+        if let transliteration = transliteration {
+            var translitContainer = container.nestedContainer(keyedBy: DynamicCodingKeys.self, forKey: .transliteration)
+            try translitContainer.encode(transliteration, forKey: DynamicCodingKeys(stringValue: "text")!)
         }
     }
 }

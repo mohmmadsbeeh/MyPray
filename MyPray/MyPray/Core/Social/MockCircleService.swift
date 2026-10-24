@@ -6,7 +6,7 @@ public final class MockCircleService: CircleServiceProtocol, @unchecked Sendable
 
     private let lock = NSLock()
     private var circles: [PrayerCircle] = []
-    private var continuationMap: [String: [AsyncStream<PrayerCircle>.Continuation]] = [:]
+    private var continuationMap: [String: [UUID: AsyncStream<PrayerCircle>.Continuation]] = [:]
 
     private init() {
         seedInitialCircles()
@@ -228,17 +228,21 @@ public final class MockCircleService: CircleServiceProtocol, @unchecked Sendable
 
     public func observeCircleUpdates(circleId: String) -> AsyncStream<PrayerCircle> {
         AsyncStream { continuation in
+            let token = UUID()
             lock.lock()
             if let circle = circles.first(where: { $0.id == circleId }) {
                 continuation.yield(circle)
             }
-            continuationMap[circleId, default: []].append(continuation)
+            if continuationMap[circleId] == nil {
+                continuationMap[circleId] = [:]
+            }
+            continuationMap[circleId]?[token] = continuation
             lock.unlock()
 
             continuation.onTermination = { [weak self] _ in
                 guard let self = self else { return }
                 self.lock.lock()
-                self.continuationMap[circleId]?.removeAll { $0 == continuation }
+                self.continuationMap[circleId]?.removeValue(forKey: token)
                 self.lock.unlock()
             }
         }
@@ -246,7 +250,7 @@ public final class MockCircleService: CircleServiceProtocol, @unchecked Sendable
 
     private func notifyObservers(for circle: PrayerCircle) {
         if let continuations = continuationMap[circle.id] {
-            for c in continuations {
+            for c in continuations.values {
                 c.yield(circle)
             }
         }
