@@ -1,4 +1,4 @@
-name: Build FivePrayer iOS App
+name: Build MyPray iOS App
 
 on:
   push:
@@ -27,11 +27,11 @@ jobs:
         run: |
           xcodegen generate
 
-      - name: Build FivePrayer (Release)
+      - name: Build MyPray (Release)
         run: |
           xcodebuild build \
-            -project FivePrayer.xcodeproj \
-            -scheme FivePrayer \
+            -project MyPray.xcodeproj \
+            -scheme MyPray \
             -destination 'generic/platform=iOS' \
             -configuration Release \
             CODE_SIGN_IDENTITY="" \
@@ -42,16 +42,16 @@ jobs:
       - name: Package Payload & IPA
         run: |
           mkdir -p build/Payload
-          cp -r build/Release-iphoneos/FivePrayer.app build/Payload/
-          cd build && zip -r FivePrayer.ipa Payload/
+          cp -r build/Release-iphoneos/MyPray.app build/Payload/
+          cd build && zip -r MyPray.ipa Payload/
           cd ..
-          ls -la build/FivePrayer.ipa
+          ls -la build/MyPray.ipa
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FivePrayer-iOS-App
-          path: build/FivePrayer.ipa
+          name: MyPray-iOS-App
+          path: build/MyPray.ipa
           retention-days: 30
 
       - name: Create GitHub Release
@@ -60,12 +60,12 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         with:
           tag_name: v1.0.0-${{ github.run_number }}
-          name: FivePrayer Build #${{ github.run_number }}
+          name: MyPray Build #${{ github.run_number }}
           body: |
-            ### FivePrayer iOS 17.0+ Build
+            ### MyPray iOS 17.0+ Build
             - Commit: `${{ github.sha }}`
             - Target: iOS 17.0+
-            - Download `FivePrayer.ipa` below to install via AltStore, Sideloadly, TrollStore, or Xcode Configurator.
-          files: build/FivePrayer.ipa
+            - Direct download for `MyPray.ipa` below to install via AltStore, Sideloadly, TrollStore, or Xcode Configurator.
+          files: build/MyPray.ipa
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

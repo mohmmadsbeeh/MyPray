@@ -1,6 +1,6 @@
-name: FivePrayer
+name: MyPray
 options:
-  bundleIdPrefix: com.fiveprayer
+  bundleIdPrefix: com.mypray
   deploymentTarget:
     iOS: "17.0"
   xcodeVersion: "15.4"
@@ -12,23 +12,24 @@ packages:
     from: 1.4.0
 
 targets:
-  FivePrayer:
+  MyPray:
     type: application
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: FivePrayer/FivePrayer
+      - path: MyPray/MyPray
     dependencies:
       - package: Adhan
-      - target: FivePrayerWidgetExtension
-      - target: PrayerDeviceActivityMonitor
-      - target: PrayerShieldConfiguration
-      - target: PrayerShieldAction
+      - target: MyPrayWidgetExtension
+      - target: MyPrayDeviceActivityMonitor
+      - target: MyPrayShieldConfiguration
+      - target: MyPrayShieldAction
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.fiveprayer.app
-        INFOPLIST_FILE: FivePrayer/FivePrayer/Info.plist
-        CODE_SIGN_ENTITLEMENTS: FivePrayer/FivePrayer/FivePrayer.entitlements
+        PRODUCT_NAME: MyPray
+        PRODUCT_BUNDLE_IDENTIFIER: com.mypray.app
+        INFOPLIST_FILE: MyPray/MyPray/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MyPray/MyPray/MyPray.entitlements
         ENABLE_BITCODE: NO
         SWIFT_VERSION: "5.9"
         CURRENT_PROJECT_VERSION: 1
@@ -36,73 +37,77 @@ targets:
         CODE_SIGNING_ALLOWED: NO
         CODE_SIGNING_REQUIRED: NO
 
-  FivePrayerWidgetExtension:
+  MyPrayWidgetExtension:
     type: app-extension
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: FivePrayer/FivePrayerWidgetExtension
-      - path: FivePrayer/FivePrayer/Core/Storage
-      - path: FivePrayer/FivePrayer/Core/PrayerEngine
-      - path: FivePrayer/FivePrayer/Core/Location
+      - path: MyPray/MyPrayWidgetExtension
+      - path: MyPray/MyPray/Core/Storage
+      - path: MyPray/MyPray/Core/PrayerEngine
+      - path: MyPray/MyPray/Core/Location
     dependencies:
       - package: Adhan
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.fiveprayer.app.widget
-        INFOPLIST_FILE: FivePrayer/FivePrayerWidgetExtension/Info.plist
-        CODE_SIGN_ENTITLEMENTS: FivePrayer/FivePrayerWidgetExtension/FivePrayerWidgetExtension.entitlements
+        PRODUCT_NAME: MyPrayWidgets
+        PRODUCT_BUNDLE_IDENTIFIER: com.mypray.app.widget
+        INFOPLIST_FILE: MyPray/MyPrayWidgetExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MyPray/MyPrayWidgetExtension/MyPrayWidgetExtension.entitlements
         SWIFT_VERSION: "5.9"
         CODE_SIGNING_ALLOWED: NO
         CODE_SIGNING_REQUIRED: NO
 
-  PrayerDeviceActivityMonitor:
+  MyPrayDeviceActivityMonitor:
     type: app-extension
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: FivePrayer/PrayerDeviceActivityMonitor
-      - path: FivePrayer/FivePrayer/Core/ScreenTime/ScreenTimeConstants.swift
-      - path: FivePrayer/FivePrayer/Core/ScreenTime/ScreenTimeAppGroupBridge.swift
+      - path: MyPray/MyPrayDeviceActivityMonitor
+      - path: MyPray/MyPray/Core/ScreenTime/ScreenTimeConstants.swift
+      - path: MyPray/MyPray/Core/ScreenTime/ScreenTimeAppGroupBridge.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.fiveprayer.app.deviceactivitymonitor
-        INFOPLIST_FILE: FivePrayer/PrayerDeviceActivityMonitor/Info.plist
-        CODE_SIGN_ENTITLEMENTS: FivePrayer/PrayerDeviceActivityMonitor/PrayerDeviceActivityMonitor.entitlements
+        PRODUCT_NAME: MyPrayDeviceActivityMonitor
+        PRODUCT_BUNDLE_IDENTIFIER: com.mypray.app.deviceactivitymonitor
+        INFOPLIST_FILE: MyPray/MyPrayDeviceActivityMonitor/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MyPray/MyPrayDeviceActivityMonitor/MyPrayDeviceActivityMonitor.entitlements
         SWIFT_VERSION: "5.9"
         CODE_SIGNING_ALLOWED: NO
         CODE_SIGNING_REQUIRED: NO
 
-  PrayerShieldConfiguration:
+  MyPrayShieldConfiguration:
     type: app-extension
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: FivePrayer/PrayerShieldConfiguration
-      - path: FivePrayer/FivePrayer/Core/ScreenTime/ScreenTimeConstants.swift
-      - path: FivePrayer/FivePrayer/Core/ScreenTime/ScreenTimeAppGroupBridge.swift
+      - path: MyPray/MyPrayShieldConfiguration
+      - path: MyPray/MyPray/Core/ScreenTime/ScreenTimeConstants.swift
+      - path: MyPray/MyPray/Core/ScreenTime/ScreenTimeAppGroupBridge.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.fiveprayer.app.shieldconfiguration
-        INFOPLIST_FILE: FivePrayer/PrayerShieldConfiguration/Info.plist
-        CODE_SIGN_ENTITLEMENTS: FivePrayer/PrayerShieldConfiguration/PrayerShieldConfiguration.entitlements
+        PRODUCT_NAME: MyPrayShieldConfiguration
+        PRODUCT_BUNDLE_IDENTIFIER: com.mypray.app.shieldconfiguration
+        INFOPLIST_FILE: MyPray/MyPrayShieldConfiguration/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MyPray/MyPrayShieldConfiguration/MyPrayShieldConfiguration.entitlements
         SWIFT_VERSION: "5.9"
         CODE_SIGNING_ALLOWED: NO
         CODE_SIGNING_REQUIRED: NO
 
-  PrayerShieldAction:
+  MyPrayShieldAction:
     type: app-extension
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: FivePrayer/PrayerShieldAction
-      - path: FivePrayer/FivePrayer/Core/ScreenTime/ScreenTimeConstants.swift
-      - path: FivePrayer/FivePrayer/Core/ScreenTime/ScreenTimeAppGroupBridge.swift
+      - path: MyPray/MyPrayShieldAction
+      - path: MyPray/MyPray/Core/ScreenTime/ScreenTimeConstants.swift
+      - path: MyPray/MyPray/Core/ScreenTime/ScreenTimeAppGroupBridge.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.fiveprayer.app.shieldaction
-        INFOPLIST_FILE: FivePrayer/PrayerShieldAction/Info.plist
-        CODE_SIGN_ENTITLEMENTS: FivePrayer/PrayerShieldAction/PrayerShieldAction.entitlements
+        PRODUCT_NAME: MyPrayShieldAction
+        PRODUCT_BUNDLE_IDENTIFIER: com.mypray.app.shieldaction
+        INFOPLIST_FILE: MyPray/MyPrayShieldAction/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MyPray/MyPrayShieldAction/MyPrayShieldAction.entitlements
         SWIFT_VERSION: "5.9"
         CODE_SIGNING_ALLOWED: NO
         CODE_SIGNING_REQUIRED: NO
