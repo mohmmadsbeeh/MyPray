@@ -60,16 +60,4 @@ public final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         print("[DeviceActivityMonitor] Shield removed for \(prayerName) prayer window expiration.")
         #endif
     }
-
-    override public func eventDidReachThreshold(for activity: DeviceActivityName, event: DeviceActivityEvent.Name) {
-        super.eventDidReachThreshold(for: activity, event: event)
-    }
-
-    override public func intervalWillStartWarning(for activity: DeviceActivityName) {
-        super.intervalWillStartWarning(for: activity)
-    }
-
-    override public func intervalWillEndWarning(for activity: DeviceActivityName) {
-        super.intervalWillEndWarning(for: activity)
-    }
 }

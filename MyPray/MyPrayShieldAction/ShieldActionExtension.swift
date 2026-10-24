@@ -1,4 +1,5 @@
 import ManagedSettings
+import ManagedSettingsUI
 import Foundation
 
 // MARK: - Shield Action Extension
